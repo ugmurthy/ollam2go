@@ -1,24 +1,22 @@
-# templates/spa
+# Ollama2Go
 
-This template leverages [Remix SPA Mode](https://remix.run/docs/en/main/future/spa-mode) to build your app as a Single-Page Application using [Client Data](https://remix.run/docs/en/main/guides/client-data) for all of you data loads and mutations.
+`Ollama2Go` is a Single page application building using the REMIX-SPA framework.
+Here is a [starter repo](https://github.com/ugmurthy/remix-spa) for building a SPA is
 
-⚠️ This is built on top of the Remix Vite template. Remix support for Vite is currently unstable and not recommended for production.
+`Ollama2Go` uses a local LLM and is just for fun and is a basic chat application.
+You can select any local Ollama supported models and chat.
 
-📖 See the [Remix Vite docs][remix-vite-docs] for details on supported features.
+# Installation
 
-## Setup
+## 1. Install Ollama
 
-```shellscript
-npx create-remix@latest --template remix-run/remix/templates/spa
-```
+[Instruction for installing Ollama](https://github.com/ollama/ollama/blob/main/README.md)
 
-## Development
+## 2. Install Ollam2Go for dev
 
-You can develop your SPA app just like you would a normal Remix app, via:
-
-```shellscript
-npm run dev
-```
+2.1 Clone this repo
+2.2 `npm install`
+2.2 `npm run dev` and open the app in browse [Ollama2Go](http://localhost:5173)
 
 ## Production
 

@@ -1,0 +1,11 @@
+FROM llama2
+# sets the temperature to 1 [higher is more creative, lower is more coherent]
+PARAMETER temperature 0.3
+# sets the context window size to 4096, this controls how many tokens the LLM can use as context to generate the next token
+PARAMETER num_ctx 4096
+PARAMETER seed 42
+# sets a custom system message to specify the behavior of the chat assistant
+SYSTEM You are the expert on generating JSON objects in response to requests for generating data. You also have the capability to produce list of JSON objects as output. You make sure that you dont response with any other test outside the JSON object. Your name is JsonDa
+
+
+
