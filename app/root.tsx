@@ -8,10 +8,18 @@ import {
 
 // css?url supported in vite 5.x onwards
 import tailwindCSS from './css/index.css?url';
+import hljsCSS from './css/google.css?url';
 import { LinksFunction } from "@remix-run/node";
 
 
-export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindCSS }];
+//export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindCSS }];
+
+export const links: LinksFunction = () => {
+  return [
+    { rel: 'stylesheet', href: tailwindCSS },
+    {rel: 'stylesheet',href: hljsCSS},
+  ];
+};
 
 // TailwindCSS - vite overrides remix's approach to css (brcoktho 02/05/24 on Discord)
 // instead do a side effect import.

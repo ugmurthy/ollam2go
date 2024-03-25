@@ -4,8 +4,9 @@ import clsx from 'clsx';
 import MarkdownIt from 'markdown-it';
 import parse from 'html-react-parser'
 import { forwardRef, useEffect } from 'react';
+import hljs from 'highlight.js'
+import CommandCopy from './CommandCopy';
 
-//function Component({children ,className, imgurl,tooltip,status, progress_type="",me=true}) {
 const Component = forwardRef(({children ,className, promptClass, imgurl,tooltip,pendingStatus, progress_type, me=true},ref) => {
   
   const classes = clsx("z-0 mt-4  bg-slate-100 text-pretty p-2 shadow-lg",className);
@@ -13,32 +14,47 @@ const Component = forwardRef(({children ,className, promptClass, imgurl,tooltip,
   const pClass = clsx("m-2 leading-relaxed text-xl font-thin overflow-hidden",promptClass);
   const iurl= imgurl ? imgurl : me ? "/human.png":"/llmBot.png"
   const progress = clsx("progress w-full fixed top-0 z-10",progress_type)
-  const md = new MarkdownIt()
-  const parsedHTML = parse(md.render(children))
+  const md = new MarkdownIt({
+    highlight: function (str) {
+      let lang='javascript'
+      //console.log(`Lang (${lang}) `,str);
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return '<pre><code class="hljs">' +
+                 hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+                 '</code></pre>';
+        } catch (__) {/*empty*/}
+      }
+  
+      return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
+    },
+    html: true,
+    linkify: true,
+    typographer: true,
+  })
+  const parsedHTML = parse(md.render(children,"javascript"))
   //console.log("pending status ",pendingStatus, progress_type)
   useEffect(()=>{ // scrolls down on every render.
     if (ref!=null && ref.current) {
       //console.log("Scroll Dn",ref.current)
       //ref.current.scrollTop = ref.current.scrollHeight;
-      ref.current.scrollIntoView(false);
+      ref.current.scrollIntoView({block:"end",behavior:"auto"});
 
     }
   });
 
-  //<span className="fixed  top-0 left-80 z-20  loading loading-bars loading-lg"></span>
-  //<span className="loading loading-bars loading-lg"></span>
-  //
   return (
     
     <div className={classes}>
       <div>{pendingStatus ?<progress className={progress}></progress>:""}</div>
   <div className="flex flex-row">
-      <div className="flex-none text-center rounded tooltip" data-tip={tooltip}><img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={iurl} alt=""/>
+      <div className="flex-none text-center rounded">
+          <div className='tooltip tooltip-right' data-tip={tooltip}><img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={iurl} alt=""/> </div>
       </div>
       <div className={pClass} ref={ref} >
       {parsedHTML}
       </div>
-      
+
   </div>
   
 </div>

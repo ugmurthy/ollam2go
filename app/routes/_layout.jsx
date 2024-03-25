@@ -6,13 +6,13 @@ import {APPBASE,getCurrentModel} from '../llmapi/llama';
 
 export default function Component() {
     //const [model, setModel] = useState('Model 1');
-const version = 'Version 0.11 19/Mar/24'
+const version = 'Version 0.10 25/Mar/24'
 function Menu() {
   
   const links = [ 
     [APPBASE,"Models"],
     [APPBASE+"chat","Chat"],
-    //[APPBASE+"Generate","Generate"],
+    [APPBASE+"generate","Generate"],
     //[APPBASE+"oai/chat","OAI Chat"]
 ]
 

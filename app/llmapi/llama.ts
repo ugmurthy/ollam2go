@@ -5,6 +5,12 @@ export const BASE_URL= BASE+"api/";
 //export const APPBASE = "http://localhost:5173/"
 export const APPBASE = "/";
 
+const controller = new AbortController();
+const signal = controller.signal;
+
+export function abort() {
+    controller.abort();
+}
 // Get list of models including details
 export async function getModels() {
     // create / destroy localStorage items models, modelnames depending on server live status
@@ -83,23 +89,38 @@ export function setCurrentModel(model:string) {
 }
 
 // save prompt, result, stats for future use
-export function saveToMemory(c_obj) {
-    localStorage.setItem("memory",JSON.stringify(c_obj));
+export function saveToMemory(c_obj,key="memory") {
+    localStorage.setItem(key,JSON.stringify(c_obj));
 }
 
-export function getFromMemory() {
+export function removeMemory(key="memory") {
+    localStorage.removeItem(key);
+}
+
+export function hasMemory(key="memory") {
+    // if we have anything else other than '[]'
+    const m = localStorage[key]?.length > 2;
+    console.log(`${key} status ${m}`)
+    return m;
+}
+export function getFromMemory(key="memory") {
     try {
-    return JSON.parse(localStorage.getItem("memory"))
+    const memory = JSON.parse(localStorage.getItem(key))
+    if (memory === null) {
+        return []
+    } else {
+        return memory;
+    }
     } catch {
         console.log("Error : getFromMemory could not parse")
-        return {}
+        return []
     }
 }
 
 
 // Generate a completion :  streaming (by default)
 export async function generate(model:string, prompt:string, stream?:boolean | true) {
-    const options = {method: 'POST', body: JSON.stringify({model,prompt,stream})}
+    const options = {method: 'POST', body: JSON.stringify({model,prompt,stream}),signal}
     const response = await fetch(BASE_URL+'generate', options);
     return response;
     }
@@ -111,7 +132,7 @@ interface Chat {
 type Messages=Chat[];
 // chat : streaming (by default)
 export async function chat(model:string, messages:Messages, stream?:boolean | true) {
-    const options = {method: 'POST', body: JSON.stringify({model,messages,stream})}
-    const response = await fetch(BASE_URL+'chat', options);
+    const options = {method: 'POST', body: JSON.stringify({model,messages,stream}),signal}
+    const response = await fetch(BASE_URL+'chat', options,);
     return response;
 }

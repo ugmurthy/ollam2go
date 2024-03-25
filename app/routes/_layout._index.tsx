@@ -1,7 +1,7 @@
 
 import type { MetaFunction } from "@remix-run/node";
 import { json, useFetcher, useLoaderData, useNavigate,  } from "@remix-run/react";
-import { getCurrentModel, getModelNames, getModels,setCurrentModel  } from "~/llmapi/llama";
+import { getCurrentModel, getModelNames, getModels,removeMemory,saveToMemory,setCurrentModel  } from "~/llmapi/llama";
 import clsx from "clsx";
 
 export const meta: MetaFunction = () => {
@@ -44,22 +44,24 @@ function Models({modelnames, currentModel}) {
   function onClick(e) {
     console.log("onClick ",e.target.innerHTML);
     setCurrentModel(e.target.innerHTML);
-    navigate("/");
+    // clear all context and memory
+    removeMemory("context")
+    removeMemory("memory")
+    navigate("/chat");
   }
     return (
       <div className="flex flex-col items-center z-10">
         <table className="m-10 text-2xl text-gray-800 text-left no-underline ">
           <thead>
             <tr>
-              <th></th>
-              <th>Available Models</th>
+              
+              <th className="pl-4">Select your Model</th>
             </tr>
           </thead>
           <tbody>
             {modelnames?.map((model, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
-                <td className={clsx("pl-4", model.includes(currentModel)? "font-bold text-sky-500 bg-gray-200 ":"hover:bg-sky-200")}  onClick={onClick}>{model}</td>
+                <td className={clsx("pl-4 pr-4 rounded-lg", model.includes(currentModel)? " text-white bg-black ":"hover:bg-gray-200")}  onClick={onClick}>{model}</td>
               </tr>
             ))}
           </tbody>
