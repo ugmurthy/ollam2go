@@ -6,7 +6,7 @@ import {APPBASE,getCurrentModel} from '../llmapi/llama';
 
 export default function Component() {
     //const [model, setModel] = useState('Model 1');
-const version = 'Version 0.10 25/Mar/24'
+const version = 'Version 0.10 26/Mar/24'
 function Menu() {
   
   const links = [ 
@@ -24,15 +24,6 @@ function Menu() {
     </>
   )
 }    
-
-/*
-</>
-      <li><a href={links[0][0]}>{links[0][1]}</a></li>
-      <li><a href={links[1][0]}>{links[1][1]}</a></li>
-      <li><a href={links[2][0]}>{links[2][1]}</a></li>
-      <li><a href={links[3][0]}>{links[3][1]}</a></li> 
-    </>
-*/
 
   return (<>
     <div className="fixed top-0 drawer z-10 ">

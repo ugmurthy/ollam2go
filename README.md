@@ -6,11 +6,34 @@ Here is a [starter repo](https://github.com/ugmurthy/remix-spa) for building a S
 `Ollama2Go` uses a local LLM and is just for fun and is a basic chat application.
 You can select any local Ollama supported models and chat.
 
+Basic Features:
+
+1. Works locally
+2. Chat/Generate content with conversation memory
+3. Starting a new covnersation erases any memory
+4. Copy to clipboard (Response, Promot or Both)
+
+Uses Cases:
+
+1. As a writing Assistant : Write short stories/poems
+2. Generate/Explain Code
+3. Generate ficticious data
+4. Summarise text
+5. Translate text
+
 # Installation
 
 ## 1. Install Ollama
 
 [Instruction for installing Ollama](https://github.com/ollama/ollama/blob/main/README.md)
+
+## 1.1 Get Models
+
+To Download a model.
+
+`ollama pull <modelname>`
+
+The list of available models are [here](https://ollama.com/library)
 
 ## 2. Install Ollam2Go for dev
 

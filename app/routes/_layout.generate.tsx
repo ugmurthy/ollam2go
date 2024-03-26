@@ -5,7 +5,7 @@
 
 import { json, useLoaderData, useLocation, useNavigate}from "@remix-run/react";
 
-import {   abort, generate, getCurrentModel, hasMemory, saveToMemory,  } from "~/llmapi/llama";
+import {   abort, generate, getCurrentModel, getFromMemory, hasMemory, saveToMemory,  } from "~/llmapi/llama";
 import { useEffect, useRef, useState } from "react";
 import Prompt from "~/components/Prompt";
 import CommandCopy from "~/components/CommandCopy";
@@ -17,9 +17,9 @@ export async function clientLoader({request}) {
   const url = new URL(request.url);
   const prompt = url.searchParams.get('prompt') || "";
   const model = getCurrentModel();
-  
+  const context = getFromMemory("context");
  
-return json({model, prompt});
+return json({model, prompt, context});
 }
   
 
@@ -27,7 +27,7 @@ clientLoader.hydrate = true;
 
  export default  function Component() {
   const responseRef = useRef();
-  const {model,prompt } = useLoaderData();
+  const {model,prompt,context } = useLoaderData();
   const [data, setData] = useState([]);
   //const [context,setContext]=useState([])
   const [hasContext,sethasContext]=useState(hasMemory("context"))
@@ -48,7 +48,7 @@ clientLoader.hydrate = true;
     const fetchData = async () => {
       console.log("fetchData");
       if (prompt==='') return;
-      const response =  await generate(model,prompt,true) ;
+      const response =  await generate(model,prompt,context,true) ;
       const reader = response.body.getReader();
       const readChunk = async () => {
         const { done, value } = await reader.read();
@@ -62,6 +62,7 @@ clientLoader.hydrate = true;
         if (chunk_json.done) {
           //Saving CONTEXT when finished
           saveToMemory(chunk_json.context,"context")
+          sethasContext(hasMemory('context'))
         }
         setData(prevData => [...prevData, chunk_json]);
         readChunk(); // Call itself recursively to read the next chunk

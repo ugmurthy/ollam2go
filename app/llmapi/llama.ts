@@ -119,7 +119,7 @@ export function getFromMemory(key="memory") {
 
 
 // Generate a completion :  streaming (by default)
-export async function generate(model:string, prompt:string, stream?:boolean | true) {
+export async function generate(model:string, prompt:string, context:Array<T>, stream?:boolean | true) {
     const options = {method: 'POST', body: JSON.stringify({model,prompt,stream}),signal}
     const response = await fetch(BASE_URL+'generate', options);
     return response;

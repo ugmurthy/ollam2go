@@ -90,7 +90,10 @@ export default function MyComponent() {
       const reader = response.body.getReader();
       const readChunk = async () => {
         const { done, value } = await reader.read();
-        if (done) return;
+        if (done) {
+          setMemory(true) // in appropriate but for now useful
+          return; //@TODO : do assemblign stuff here like what (sumStr) does 
+        }
         const chunk = new TextDecoder().decode(value);
         setData(prevData => [...prevData, JSON.parse(chunk)]);
         readChunk(); // Call itself recursively to read the next chunk

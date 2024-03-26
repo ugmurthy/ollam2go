@@ -3,7 +3,7 @@ import { getCurrentModel } from '../llmapi/llama'
 import { useRef } from 'react';
 import { useLocation } from '@remix-run/react';
 // eslint-disable-next-line react/prop-types
-function Component({method="GET", className="bg-gray-100"}) {
+function Component({method="GET", className="bg-gray-100 "}) {
   const formRef = useRef()
   const currentModel = getCurrentModel();
    const location = useLocation().pathname.substring(1);
@@ -21,7 +21,7 @@ function Component({method="GET", className="bg-gray-100"}) {
       <textarea 
          name="prompt" 
          placeholder={location+" with "+modelStr+"..."} 
-         className="p-2 shadow-2xl flex-grow fixed bottom-0 left-1/2 m-0 -translate-x-1/2 transform rounded-lg bg-slate-100 w-11/12 "
+         className=" hover:outline hover:outline-2  p-2 shadow-2xl flex-grow fixed bottom-0 left-1/2 m-0 -translate-x-1/2 transform rounded-lg bg-slate-100 w-11/12 "
          onKeyUp={handleKeyPress}>
          </textarea>
       
