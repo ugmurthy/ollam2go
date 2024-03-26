@@ -6,7 +6,7 @@ Here is a [starter repo](https://github.com/ugmurthy/remix-spa) for building a S
 `Ollama2Go` uses a local LLM and is just for fun and is a basic chat application.
 You can select any local Ollama supported models and chat.
 
-[Olamma2Go - watch it in action]
+[Olamma2Go - watch it in action](https://youtu.be/okbCL9sKLPs)
 
 Basic Features:
 
