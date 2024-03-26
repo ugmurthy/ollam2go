@@ -5,7 +5,8 @@ import MarkdownIt from 'markdown-it';
 import parse from 'html-react-parser'
 import { forwardRef, useEffect } from 'react';
 import hljs from 'highlight.js'
-import CommandCopy from './CommandCopy';
+
+import { getFromMemory, hasMemory } from '../llmapi/llama'
 
 const Component = forwardRef(({children ,className, promptClass, imgurl,tooltip,pendingStatus, progress_type, me=true},ref) => {
   
@@ -14,6 +15,8 @@ const Component = forwardRef(({children ,className, promptClass, imgurl,tooltip,
   const pClass = clsx("m-2 leading-relaxed text-xl font-thin overflow-hidden",promptClass);
   const iurl= imgurl ? imgurl : me ? "/human.png":"/llmBot.png"
   const progress = clsx("progress w-full fixed top-0 z-10",progress_type)
+  const system = hasMemory("system") && !me;
+  const systmeStr = system? getFromMemory('system')[0].content :""
   const md = new MarkdownIt({
     highlight: function (str) {
       let lang='javascript'
@@ -48,8 +51,9 @@ const Component = forwardRef(({children ,className, promptClass, imgurl,tooltip,
     <div className={classes}>
       <div>{pendingStatus ?<progress className={progress}></progress>:""}</div>
   <div className="flex flex-row">
-      <div className="flex-none text-center rounded">
+      <div className="flex flex-col text-center rounded">
           <div className='tooltip tooltip-right' data-tip={tooltip}><img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={iurl} alt=""/> </div>
+          {system?<div className='badge badge-primary badge-xs tooltip tooltip-right tooltip-primary' data-tip={systmeStr}>system</div>:""}
       </div>
       <div className={pClass} ref={ref} >
       {parsedHTML}

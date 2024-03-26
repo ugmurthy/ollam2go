@@ -29,7 +29,7 @@ clientLoader.hydrate = true;
   const responseRef = useRef();
   const {model,prompt,context } = useLoaderData();
   const [data, setData] = useState([]);
-  //const [context,setContext]=useState([])
+  
   const [hasContext,sethasContext]=useState(hasMemory("context"))
   const location = useLocation();
   const navigate = useNavigate();

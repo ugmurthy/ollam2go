@@ -1,7 +1,11 @@
 
 export const BASE = "http://localhost:11434/"
 export const BASE_URL= BASE+"api/";
-
+export const COMMANDS = {
+    SET_SYSTEM:"/set system",
+    SET_TEMPERATURE:"/set temperature",
+    SET_SEED:"/set seed",
+}
 //export const APPBASE = "http://localhost:5173/"
 export const APPBASE = "/";
 
@@ -100,7 +104,7 @@ export function removeMemory(key="memory") {
 export function hasMemory(key="memory") {
     // if we have anything else other than '[]'
     const m = localStorage[key]?.length > 2;
-    console.log(`${key} status ${m}`)
+    //console.log(`${key} status ${m}`)
     return m;
 }
 export function getFromMemory(key="memory") {
@@ -120,6 +124,8 @@ export function getFromMemory(key="memory") {
 
 // Generate a completion :  streaming (by default)
 export async function generate(model:string, prompt:string, context:Array<T>, stream?:boolean | true) {
+    const system = hasMemory('system')?{system:getFromMemory('system')[0].content}:{};
+    console.log("System Gen ",system)
     const options = {method: 'POST', body: JSON.stringify({model,prompt,stream}),signal}
     const response = await fetch(BASE_URL+'generate', options);
     return response;

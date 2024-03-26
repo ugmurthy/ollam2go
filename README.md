@@ -1,10 +1,12 @@
 # Ollama2Go
 
 `Ollama2Go` is a Single page application building using the REMIX-SPA framework.
-Here is a [starter repo](https://github.com/ugmurthy/remix-spa) for building a SPA is
+Here is a [starter repo](https://github.com/ugmurthy/remix-spa) for building a SPA.
 
 `Ollama2Go` uses a local LLM and is just for fun and is a basic chat application.
 You can select any local Ollama supported models and chat.
+
+[Olamma2Go - watch it in action]
 
 Basic Features:
 
@@ -12,6 +14,11 @@ Basic Features:
 2. Chat/Generate content with conversation memory
 3. Starting a new covnersation erases any memory
 4. Copy to clipboard (Response, Promot or Both)
+5. Set SYSTEM prompt to
+   - Provide Task instructions
+   - Set objective
+   - modify personality
+   - provide guidance - what to do / what not to do...
 
 Uses Cases:
 
